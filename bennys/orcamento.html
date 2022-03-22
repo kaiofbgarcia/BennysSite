@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <script type=text/javascript src="script.js"></script>
+        <link href="style.css" rel="stylesheet"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Orçamento</title>
+    </head>
+    <body>
+        <header>
+            <div class="caixa">
+                <h1>
+                    <img id= "logo" src="../img/logo.png">
+                </h1>
+                <nav>
+                    <a href="index.html">INÍCIO</a>
+                    <a href="orcamento.html">ORÇAMENTO</a>
+                    <a href="eventos.html">EVENTOS</a>
+                    <a href="encontre.html">ENCONTRE-NOS</a>
+                </nav>
+            </div>
+        </header>
+        <main id="app">  
+            <section class="items">
+                <h4>Selecione os produtos</h4>
+                <div v-for="product in products" 
+                    class="product"
+                    @click="toggleActive(product)"
+                    :class="{selected: product.active}"
+                >
+                    <div class="photo">
+                        <img :src="product.photo">
+                    </div>
+                    <div class="description">
+                        <span class="name">{{product.name}}</span> 
+                        <span class="price">$ {{product.price}}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="summary" v-if="total()>0">
+                <strong>Resumo do pedido</strong>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="product in products">
+                            <template v-if="product.active">
+                                <td>{{product.name}}</td>
+                                <td>{{(product.price).toFixed(2)}}</td>
+                            </template>
+                        </tr>
+                        
+                        <tr>
+                            <th>Total</th>
+                            <th>{{total()}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="scripts.js"></script>
+    </body>
+</html>
